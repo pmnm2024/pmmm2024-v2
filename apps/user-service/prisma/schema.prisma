@@ -1,0 +1,53 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  address   Json?
+  createdAt DateTime     @default(now())
+  email     String?      @unique
+  firstName String?
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  lastName  String?
+  password  String
+  phone     String?
+  rank      RankUser?    @relation(fields: [rankId], references: [id])
+  rankId    String?      @unique @db.ObjectId
+  roles     Json
+  score     Int?
+  sex       EnumUserSex?
+  updatedAt DateTime     @updatedAt
+  username  String       @unique
+}
+
+model OutBox {
+  createdAt     DateTime  @default(now())
+  eventType     String?
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  payload       Json?
+  processedDate DateTime?
+  retry         Int?
+  status        String?
+  updatedAt     DateTime  @updatedAt
+}
+
+model RankUser {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  point       Int
+  rankLevel   Int      @unique
+  rankName    String   @unique
+  rankUser    User?
+  updatedAt   DateTime @updatedAt
+}
+
+enum EnumUserSex {
+  Male
+  Female
+}
