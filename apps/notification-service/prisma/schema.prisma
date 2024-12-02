@@ -1,0 +1,29 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Notification {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  message   String?
+  status    Boolean?
+  title     String?
+  updatedAt DateTime @updatedAt
+  user      String?
+}
+
+model Outbox {
+  createdAt     DateTime  @default(now())
+  eventType     String?
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  payload       Json?
+  processedDate DateTime?
+  retry         Int?
+  status        String?
+  updatedAt     DateTime  @updatedAt
+}
