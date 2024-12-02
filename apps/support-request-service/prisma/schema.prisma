@@ -1,0 +1,59 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SupportRequest {
+  city                 String
+  createdAt            DateTime                 @default(now())
+  descripton           String
+  detailAddress        String?
+  district             String
+  email                String
+  fullname             String
+  id                   String                   @id @default(auto()) @map("_id") @db.ObjectId
+  phone                String
+  quantity             Int?
+  status               EnumSupportRequestStatus
+  supportRequestTypeId String
+  updatedAt            DateTime                 @updatedAt
+  ward                 String
+}
+
+model SupportRequestType {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  updatedAt DateTime @updatedAt
+}
+
+model SupportRequestDetail {
+  createdAt        DateTime @default(now())
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  quantity         Int
+  supportRequestID String
+  unit             String
+  updatedAt        DateTime @updatedAt
+  wareHouseId      String
+  wareHouseName    String
+}
+
+model OutBox {
+  createdAt     DateTime  @default(now())
+  eventType     String?
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  payload       Json?
+  processedDate DateTime?
+  retry         Int?
+  status        String?
+  updatedAt     DateTime  @updatedAt
+}
+
+enum EnumSupportRequestStatus {
+  Pending
+  Processed
+}
