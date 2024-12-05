@@ -17,5 +17,8 @@
     "skipLibCheck": true,
     "strict": true
   },
+  "watchOptions": {
+    "watchFile": "fixedPollingInterval"
+  },
   "include": ["src"]
 }

@@ -33,6 +33,13 @@ export class RabbitMQProducerService {
       Buffer.from(JSON.stringify({ pattern: topic, data: record })),
       {
         persistent: true,
+        headers: {
+          'x-dead-letter-exchange': 'dlx_exchange',
+          'x-dead-letter-routing-key': `dlx_${topic}`,
+          'x-message-ttl': 60000,
+          'x-max-retries': 5, 
+          'x-retry-count': 0
+        },
       }
     );
   }
