@@ -14,7 +14,7 @@ model User {
   firstName   String?
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
   lastName    String?
-  nowLocation String?
+  nowLocation Json?
   password    String
   phone       String?
   rank        RankUser?    @relation(fields: [rankId], references: [id])
