@@ -75,6 +75,16 @@ class UserCreateInput {
   lastName?: string | null;
 
   @ApiProperty({
+    required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  nowLocation?: InputJsonValue;
+
+  @ApiProperty({
     required: true,
     type: String,
   })

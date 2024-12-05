@@ -76,6 +76,16 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  nowLocation?: InputJsonValue;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()

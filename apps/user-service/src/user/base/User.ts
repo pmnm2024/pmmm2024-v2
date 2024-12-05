@@ -94,8 +94,20 @@ class User {
 
   @ApiProperty({
     required: false,
+  })
+
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  nowLocation!: JsonValue;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
+
   @IsString()
   @MaxLength(1000)
   @IsOptional()
