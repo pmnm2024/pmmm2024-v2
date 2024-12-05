@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, UnauthorizedException, forwardRef } from "@nestjs/common";
 import { Credentials } from "./Credentials";
 import { PasswordService } from "./password.service";
 import { TokenService } from "./token.service";
@@ -10,8 +10,8 @@ export class AuthService {
   constructor(
     private readonly passwordService: PasswordService,
     private readonly tokenService: TokenService,
-    private readonly userService: UserService
-  ) {}
+    @Inject(forwardRef(() => UserService)) private readonly userService: UserService,
+  ) { }
 
   async validateUser(
     username: string,
@@ -36,14 +36,25 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException("The passed credentials are incorrect");
     }
-    const accessToken = await this.tokenService.createToken({
-      id: user.id,
-      username,
-      password,
-    });
+    const accessToken = await this.createToken(user.id, username, password)
     return {
       accessToken,
       ...user,
     };
+  }
+
+  async createToken(id: string, username: string, password: string) {
+    const accessToken = await this.tokenService.createToken({
+      id: id,
+      username,
+      password,
+      jti: `${id}_${Date.now()}`
+    });
+    return accessToken
+  }
+
+  async decodeToken(token: string) {
+    const decode = await this.tokenService.decodeToken(token)
+    return decode;
   }
 }

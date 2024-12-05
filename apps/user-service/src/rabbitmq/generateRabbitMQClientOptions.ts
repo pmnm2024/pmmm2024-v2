@@ -19,6 +19,12 @@ export const generateRabbitMQClientOptions = (
       queueOptions: {
         consumerGroupId: configService.get("RABBITMQ_SUBSCRIBE_GROUP"),
         noAssert: topic ? false : true, // If topic is not defined, then the queue is not created
+        arguments: {
+          'x-dead-letter-exchange': 'dlx_exchange',
+          'x-dead-letter-routing-key': `dlx_${configService.get("RABBITMQ_SUBSCRIBE_GROUP")}`,
+          'x-message-ttl': 60000,
+          'x-max-retries': 5, 
+        },
       },
     },
   };
