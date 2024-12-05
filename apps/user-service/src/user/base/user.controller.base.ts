@@ -65,6 +65,7 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        nowLocation: true,
         phone: true,
 
         rank: {
@@ -105,6 +106,7 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        nowLocation: true,
         phone: true,
 
         rank: {
@@ -146,6 +148,7 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        nowLocation: true,
         phone: true,
 
         rank: {
@@ -204,6 +207,7 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+          nowLocation: true,
           phone: true,
 
           rank: {
@@ -253,6 +257,7 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+          nowLocation: true,
           phone: true,
 
           rank: {
